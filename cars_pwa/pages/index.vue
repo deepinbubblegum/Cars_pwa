@@ -1,13 +1,13 @@
 <template>
   <div>
     <img class="user_def_icon" src="~/assets/svg/Asset2.svg" />
-      <div class="sign_in">
-        <p class="text_sign_in">SIGN IN</p>
+    <div class="sign_in">
+      <p class="text_sign_in">SIGN IN</p>
 
-        <input class="input-box" placeholder="Username" type="text" />
-        <input class="input-box" placeholder="Password" ctype="password" />
-        <button class="input-box sing-btn">SIGN IN</button>
-      </div>
+      <input class="input-box" placeholder="Username" type="text" />
+      <input class="input-box" placeholder="Password" ctype="password" />
+      <button class="input-box sing-btn">SIGN IN</button>
+    </div>
   </div>
 </template>
 
@@ -28,20 +28,19 @@ export default {};
   font-size: 30px;
   font-weight: bold;
   text-align: center;
-
-
 }
 .sign_in {
   position: absolute;
   top: 40%;
   left: 50%;
   display: inline-block;
-  width: 25%;
+  width: 40%;
   min-width: 280px;
+
   display: flex;
   flex-direction: column;
   transform: translate(-50%, -50%);
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 10px;
   padding: 40px;
@@ -54,7 +53,6 @@ export default {};
   border: none;
   padding: 14px;
   outline: none;
-  
 }
 .sing-btn {
   outline: none !important;
@@ -63,17 +61,10 @@ export default {};
   color: white;
   font-weight: bold;
   cursor: pointer;
-  
 }
 .sing-btn:hover {
   background-color: green;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-
-.card {
-  position: absolute;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 hr.new {
