@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h3 class="text-show-id">ID : 123456789</h3>
+    <h3 class="text-show-id">ID : {{$store.state.qr_data}}</h3>
 
     <div class="box-car-image">
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -18,7 +18,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -30,7 +30,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -42,7 +42,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -53,7 +53,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -64,7 +64,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -75,7 +75,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="https://www.w3schools.com/Css/img_5terre.jpg"
+            src="~/assets/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -106,7 +106,8 @@
 </template>
 
 <script>
-export default {};
+export default {
+};
 </script>
 
 <style>
