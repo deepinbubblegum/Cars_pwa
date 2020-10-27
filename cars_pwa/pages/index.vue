@@ -17,7 +17,7 @@ export default {};
 
 <style>
 .user_def_icon {
-  width: 6%;
+  width: 5%;
   top: 8%;
   right: 5%;
   position: absolute;
@@ -29,6 +29,7 @@ export default {};
   font-weight: bold;
   text-align: center;
 }
+
 .sign_in {
   position: absolute;
   top: 40%;
@@ -54,6 +55,7 @@ export default {};
   padding: 14px;
   outline: none;
 }
+
 .sing-btn {
   outline: none !important;
   border: none;
@@ -62,6 +64,7 @@ export default {};
   font-weight: bold;
   cursor: pointer;
 }
+
 .sing-btn:hover {
   background-color: green;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
