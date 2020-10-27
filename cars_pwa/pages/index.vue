@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img class="top-navicator-image" src="~/assets/svg/Asset1.svg" />
     <img class="user_def_icon" src="~/assets/svg/Asset2.svg" />
     <div class="sign_in">
       <p class="text_sign_in">SIGN IN</p>
@@ -50,23 +51,24 @@ export default {};
   float: left;
   margin: 6px;
   border-radius: 20px;
-  background-color: lightskyblue;
+  background-color: rgb(255, 255, 255);
   border: none;
   padding: 14px;
   outline: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .sing-btn {
   outline: none !important;
   border: none;
-  background-color: rgba(0, 128, 0, 0.842);
+  background-color: #ff9900;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
 
 .sing-btn:hover {
-  background-color: green;
+  background-color: #ff9900e5;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -77,4 +79,5 @@ hr.new {
   margin: 0;
   padding: 1;
 }
+
 </style>

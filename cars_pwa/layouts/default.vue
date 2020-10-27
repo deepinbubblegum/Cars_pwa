@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img class="top-navicator-image" src="~/assets/svg/Asset1.svg" />
     <Nuxt />
   </div>
 </template>
