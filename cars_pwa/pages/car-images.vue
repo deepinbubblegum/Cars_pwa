@@ -6,7 +6,7 @@
       <div class="responsive">
         <div class="gallery">
           <img
-            src="~/assets/img_5terre.jpg"
+            src="http://127.0.0.1:80/CARS_PWA/api/images/123456/img_5terre.jpg"
             alt="Cinque Terre"
             width="600"
             height="400"
@@ -14,76 +14,6 @@
           <div class="desc">1</div>
         </div>
       </div>
-
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-      <div class="responsive">
-        <div class="gallery">
-          <img
-            src="~/assets/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc">1</div>
-        </div>
-      </div>
-
       <div class="responsive">
         <div class="gallery-add">
           <img
@@ -98,8 +28,7 @@
       </div>
     </div>
 
-    <button class="btn-take-photo">
-        <img src="">
+    <button class="btn-take-photo" @click="takeaphoto">
         Take a photo
     </button>
   </div>
@@ -107,6 +36,29 @@
 
 <script>
 export default {
+    data() {
+    return {
+      path_image: "123456",
+      path_list = [],
+    };
+  },
+  methods: {
+    async takeaphoto() {
+      try {
+        const response = await this.$axios.post("http://localhost:80/CARS_PWA/api/takephoto.php/sendUdp", {
+            user: {
+              car_id: this.path_image,
+            },
+        });
+        console.log(response.data.messages);
+        if(response.data.messages.length >= 9){
+          path_list = this.response.data.messages;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
 };
 </script>
 
@@ -203,6 +155,7 @@ div.desc {
   color: whitesmoke;
   font-weight: bold;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .btn-take-photo:hover{

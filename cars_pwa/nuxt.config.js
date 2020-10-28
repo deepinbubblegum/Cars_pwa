@@ -31,11 +31,31 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://fonts.google.com/
     '@nuxtjs/google-fonts',
+    // https://go.nuxtjs.dev/auth
+    '@nuxtjs/auth'
   ],
 
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'user.php/signin', method: 'GET', propertyName: 'token' },
+          user: { url: 'user.php/me', method: 'GET', propertyName: 'user'},
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/'
+    }
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:80/CARS_PWA/api'
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

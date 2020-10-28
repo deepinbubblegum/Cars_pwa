@@ -5,15 +5,57 @@
     <div class="sign_in">
       <p class="text_sign_in">SIGN IN</p>
 
-      <input class="input-box" placeholder="Username" type="text" />
-      <input class="input-box" placeholder="Password" ctype="password" />
-      <button class="input-box sing-btn">SIGN IN</button>
+      <input
+        class="input-box"
+        placeholder="Username"
+        v-model="username"
+        type="text"
+      />
+      <input
+        class="input-box"
+        placeholder="Password"
+        v-model="password"
+        type="password"
+      />
+      <button class="input-box sing-btn" @click="handleLoginClicked">
+        SIGN IN
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  layout: "session",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    async handleLoginClicked() {
+      try {
+        const response = await this.$axios.post(
+          "http://localhost:80/CARS_PWA/api/user.php/signin",
+          {
+            user: {
+              username: this.username,
+              password: this.password,
+            },
+          }
+        );
+        console.log(response);
+
+        // if (response.data.success) {
+        //   this.$router.replace('/scanQR');
+        // }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -79,5 +121,4 @@ hr.new {
   margin: 0;
   padding: 1;
 }
-
 </style>
