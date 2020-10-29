@@ -3,13 +3,21 @@
     <img class="top-navicator-image" src="~/assets/svg/Asset1.svg" />
     <div>
       <img class="success-image" src="~/assets/svg/success.svg" alt="success" />
-      <h2 class="h2-txt">ระบบได้ทำการบันทึกข้อมูล <br> เรียบร้อยแล้ว</h2>
+      <h2 class="h2-txt">
+        ระบบได้ทำการบันทึกข้อมูล <br />
+        เรียบร้อยแล้ว
+      </h2>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {},
+  created() {
+    setTimeout(() => this.$router.push({ path: "/scanQR" }), 3000);
+  },
+};
 </script>
 
 <style>

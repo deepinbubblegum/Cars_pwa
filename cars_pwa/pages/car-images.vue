@@ -11,66 +11,83 @@
         v-bind:key="item.id"
       >
         <div class="gallery">
-          <img
-            :src="
-              'http://localhost:80/CARS_PWA/api/images/' +
-              path_image +
-              '/' +
-              item
-            "
-          />
+          <img :src="'/images/' + path_image + '/' + item" />
           <div class="desc">{{ index + 1 }}</div>
         </div>
       </div>
-
-      <label class="cameraButton"
+      <label v-if="list_count" class="cameraButton">
+        <div class="responsive">
+          <div class="gallery">
+            <img src="~/assets/svg/image_add_camera.png" />
+            <input
+              id="file"
+              type="file"
+              @change="upload_image"
+              accept="image/*;capture=camera"
+            />
+            <div class="desc">ADD</div>
+          </div>
+        </div>
+      </label>
+      <!-- <label v-if="list_count" class="cameraButton"
         ><img src="~/assets/svg/image_add_camera.png" />
-        <input id="file"
+        <input
+          id="file"
           type="file"
           @change="upload_image"
           accept="image/*;capture=camera"
         />
-      </label>
+      </label> -->
     </div>
-    <button class="btn-take-photo" @click="takeaphoto">Take a photo</button>
+    <div class="container-display">
+      <button class="btn-take-photo" v-if="!list_count" @click="takeaphoto">Take a photos</button>
+      <button class="btn-take-photo" v-if="list_count" @click="takeaphoto">Take more photos</button>
+      <button class="btn-take-photo" v-if="list_count" @click="next_page">Next</button>
+    </div>
   </div>
 </template>
 
 <script>
+var dgram = require("chrome-dgram");
 export default {
   data() {
     return {
-      // path_image: this.$store.state.qr_data,
-      path_image: '456789',
-      images: [],
+      path_image: this.$store.state.qr_data,
+      // path_image: "456789",
+      images: null,
       isHidden: true,
+      list_count: 0,
+      takestate: false
     };
   },
   methods: {
+    next_page(){
+      this.$router.replace('/success');
+    },
     upload_image() {
       var formData = new FormData();
-      var imagefile = document.querySelector('#file');
-      formData.append('file', imagefile.files[0]);
+      var imagefile = document.querySelector("#file");
+      formData.append("file", imagefile.files[0]);
       formData.append("path_image", this.path_image);
-      this.$axios.post("http://localhost:80/CARS_PWA/api/takephoto.php/upload_file_m", formData, {
+      this.$axios.post("/takephoto.php/upload_file_m", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      this.getfristTime();
     },
     async takeaphoto() {
       try {
-        const response = await this.$axios.post(
-          "http://localhost:80/CARS_PWA/api/takephoto.php/sendUdp",
-          {
-            user: {
-              car_id: this.path_image,
-            },
-          }
-        );
+        const response = await this.$axios.post("takephoto.php/sendUdp", {
+          user: {
+            car_id: this.path_image,
+          },
+        });
         this.images = [];
         console.log(response.data.messages);
         this.images = response.data.messages;
+        this.list_count = this.images.length;
+        (this.images.length !== 0) ? this.takestate = true:this.takestate = false;
       } catch (err) {
         console.log(err);
       }
@@ -78,21 +95,21 @@ export default {
 
     async getfristTime() {
       try {
-        const response = await this.$axios.post(
-          "http://localhost:80/CARS_PWA/api/takephoto.php/getimagefrist",
-          {
-            user: {
-              car_id: this.path_image,
-            },
-          }
-        );
+        const response = await this.$axios.post("takephoto.php/getimagefrist", {
+          user: {
+            car_id: this.path_image,
+          },
+        });
         this.images = [];
         console.log("fristtime");
         console.log(response);
         this.images = response.data.messages;
+        this.list_count = this.images.length;
+        (this.images.length !== 0) ? this.takestate = true:this.takestate = false;
       } catch (err) {
         console.log(err);
       }
+      console.log(this.$store.state.ip);
     },
   },
   created() {
@@ -112,8 +129,9 @@ export default {
 .box-car-image {
   position: absolute;
   top: 50px;
-  padding-left: 5%;
-  padding-right: 5%;
+  /* padding-left: 5%;
+  padding-right: 5%; */
+  margin: 0;
 }
 
 div.gallery {
@@ -185,15 +203,20 @@ div.desc {
   display: table;
   clear: both;
 }
+.container-display {
+  z-index: 999;
+  width: 100%;
+  top: 100%;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-100%);
+  display: flex;
+}
 
 .btn-take-photo {
-  position: fixed;
-  top: 100%;
   width: 100%;
   height: 50px;
-  -webkit-transform: translateY(-100%);
-  -ms-transform: translateY(-100%);
-  transform: translateY(-100%);
   border: none;
   outline: none !important;
   background-color: #ff9900;
@@ -210,7 +233,7 @@ div.desc {
 label.cameraButton {
   display: inline-block;
   margin: 0;
-
+  width: 100%;
   /* Styles to make it look like a button */
   padding: 0;
   border: 0;

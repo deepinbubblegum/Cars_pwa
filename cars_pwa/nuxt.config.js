@@ -17,7 +17,10 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [{ src: '@/plugins/qr.js', mode: 'client' }],
+  plugins: [
+    { src: '@/plugins/qr.js', mode: 'client' },
+    {src: '@/plugins/acc_ip.js'}
+  ],
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
@@ -42,7 +45,7 @@ export default {
       local: {
         endpoints: {
           login: { url: 'user.php/signin', method: 'GET', propertyName: 'token' },
-          user: { url: 'user.php/me', method: 'GET', propertyName: 'user'},
+          user: { url: 'user.php/me', method: 'GET', propertyName: 'user' },
           logout: false
         }
       }
@@ -54,10 +57,19 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: 'http://localhost:80/CARS_PWA/api'
+    baseURL: 'http://192.168.2.37/CARS_PWA/api'
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+  },
+
+  server: {
+    port: 8000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
+
+  static: {
+    prefix: false
   }
 }

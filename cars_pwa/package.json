@@ -13,6 +13,7 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/pwa": "^3.0.2",
     "bootstrap": "^4.5.2",
+    "chrome-dgram": "^3.0.6",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
     "vue-qrcode-reader": "^2.3.14"

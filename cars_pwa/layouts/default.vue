@@ -9,6 +9,8 @@ body {
   font-family: 'Prompt', sans-serif;
   background: whitesmoke;
   -webkit-font-smoothing: auto;
+  margin: 0;
+  padding: 0;
 }
 
 #app {

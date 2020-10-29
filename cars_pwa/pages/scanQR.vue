@@ -12,7 +12,7 @@
         <p class="decode-result" v-if="result">
           ID: <b>{{ result }}</b>
         </p>
-        <qrcode-stream @decode="onDecode" @init="onInit"></qrcode-stream>
+        <qrcode-stream class="qrcode-stream" @decode="onDecode" @init="onInit"></qrcode-stream>
       </div>
     </div>
   </div>
@@ -98,7 +98,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   background-color: black;
   padding: 8px;
   margin: 0px;
@@ -110,10 +110,10 @@ export default {
 
 .close {
   position: absolute;
-  right: 32px;
-  top: 32px;
-  width: 32px;
-  height: 32px;
+  right: 38px;
+  top: 38px;
+  width: 38px;
+  height: 38px;
   opacity: 0.3;
   z-index: 99;
 }
@@ -137,9 +137,8 @@ export default {
 }
 
 .dispaly-scan {
-  width: 100%;
-  height: 100%;
-  padding: 28px;
+  width: 99%;
+  height: 99%;
 }
 
 .decode-result {

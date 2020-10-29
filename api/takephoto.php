@@ -33,7 +33,7 @@ function generateRandomString($length = 5)
 function sendUdp()
 {
     $data = json_decode(file_get_contents('php://input'), true);
-    $structure = './images/' . $data['user']['car_id'];
+    $structure = '../cars_pwa/static/images/' . $data['user']['car_id'];
 
     if ($_SERVER['REQUEST_METHOD'] == 'OPTION') {
         http_response_code(200);
@@ -47,7 +47,7 @@ function sendUdp()
         socket_sendto($sock, $msg, $len, 0, $server, $port);
         socket_close($sock);
 
-        $tmp_image = './images/tmp';
+        $tmp_image = '../cars_pwa/static/images/tmp';
         $tem_file = [];
         while (sizeof($tem_file) <= 7) {
             // $tem_file = scandir($tmp_image);
@@ -78,7 +78,7 @@ function getimagefrist()
 {
     $file = [];
     $data = json_decode(file_get_contents('php://input'), true);
-    $structure = './images/' . $data['user']['car_id'];
+    $structure = '../cars_pwa/static/images/' . $data['user']['car_id'];
 
     if ($_SERVER['REQUEST_METHOD'] == 'OPTION') {
         http_response_code(200);
@@ -87,12 +87,42 @@ function getimagefrist()
         if (is_dir($structure)) {
             $file = array_diff(scandir($structure, 1), array('..', '.'));
         }
-        echo json_encode(['messages' => $file]);
     }
+    echo json_encode(['messages' => $file]);
 }
 
 function upload_file_m()
 {
-    $image = '';
-    print_r($_POST);
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTION') {
+        http_response_code(200);
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $image = '';
+
+        if (isset($_FILES['file']['name'])) {
+            $image_name = $_FILES['file']['name'];
+            $valid_extensions = array("jpg", "jpeg", "png");
+            $extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            if (in_array($extension, $valid_extensions)) {
+                $upload_path = '../cars_pwa/static/images/'.$_POST['path_image'].'/'. time() . '.' . $extension;
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $upload_path)) {
+                    $message = 'Image Uploaded';
+                    $image = $upload_path;
+                } else {
+                    $message = 'There is an error while uploading image';
+                }
+            } else {
+                $message = 'Only .jpg, .jpeg and .png Image allowed to upload';
+            }
+        } else {
+            $message = 'Select Image';
+        }
+
+        $output = array(
+            'message'  => $message,
+            'image'   => $image
+        );
+
+        echo json_encode($output);
+    }
 }

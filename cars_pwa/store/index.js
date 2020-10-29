@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 const store = () => new Vuex.Store({
   state: {
-    qr_data: ''
+    qr_data: '',
+    ip:''
   },
   mutations: {
     scanded (state, text) {
       state.qr_data = text
+    },
+    SET_IP(state, text){
+      state.ip = text
     }
   }
 })

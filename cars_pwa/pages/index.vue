@@ -36,8 +36,7 @@ export default {
   methods: {
     async handleLoginClicked() {
       try {
-        const response = await this.$axios.post(
-          "http://localhost:80/CARS_PWA/api/user.php/signin",
+        const response = await this.$axios.post("user.php/signin",
           {
             user: {
               username: this.username,
