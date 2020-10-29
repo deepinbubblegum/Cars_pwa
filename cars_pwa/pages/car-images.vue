@@ -1,63 +1,102 @@
 <template>
   <div>
-    <h3 class="text-show-id">ID : {{$store.state.qr_data}}</h3>
+    <h3 class="text-show-id">ID : {{ $store.state.qr_data }}</h3>
 
     <div class="box-car-image">
-      <div class="responsive">
+      <div
+        class="responsive"
+        v-for="(item, index) in images"
+        v-bind:item="item"
+        v-bind:index="index"
+        v-bind:key="item.id"
+      >
         <div class="gallery">
           <img
-            src="http://127.0.0.1:80/CARS_PWA/api/images/123456/img_5terre.jpg"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
+            :src="
+              'http://localhost:80/CARS_PWA/api/images/' +
+              path_image +
+              '/' +
+              item
+            "
           />
-          <div class="desc">1</div>
+          <div class="desc">{{ index + 1 }}</div>
         </div>
       </div>
-      <div class="responsive">
-        <div class="gallery-add">
-          <img
-            class="image_add"
-            src="~/assets/svg/image_add_camera.png"
-            alt="Cinque Terre"
-            width="600"
-            height="400"
-          />
-          <div class="desc"></div>
-        </div>
-      </div>
-    </div>
 
-    <button class="btn-take-photo" @click="takeaphoto">
-        Take a photo
-    </button>
+      <label class="cameraButton"
+        ><img src="~/assets/svg/image_add_camera.png" />
+        <input id="file"
+          type="file"
+          @change="upload_image"
+          accept="image/*;capture=camera"
+        />
+      </label>
+    </div>
+    <button class="btn-take-photo" @click="takeaphoto">Take a photo</button>
   </div>
 </template>
 
 <script>
 export default {
-    data() {
+  data() {
     return {
-      path_image: "123456",
-      path_list = [],
+      // path_image: this.$store.state.qr_data,
+      path_image: '456789',
+      images: [],
+      isHidden: true,
     };
   },
   methods: {
+    upload_image() {
+      var formData = new FormData();
+      var imagefile = document.querySelector('#file');
+      formData.append('file', imagefile.files[0]);
+      formData.append("path_image", this.path_image);
+      this.$axios.post("http://localhost:80/CARS_PWA/api/takephoto.php/upload_file_m", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    },
     async takeaphoto() {
       try {
-        const response = await this.$axios.post("http://localhost:80/CARS_PWA/api/takephoto.php/sendUdp", {
+        const response = await this.$axios.post(
+          "http://localhost:80/CARS_PWA/api/takephoto.php/sendUdp",
+          {
             user: {
               car_id: this.path_image,
             },
-        });
+          }
+        );
+        this.images = [];
         console.log(response.data.messages);
-        if(response.data.messages.length >= 9){
-          path_list = this.response.data.messages;
-        }
+        this.images = response.data.messages;
       } catch (err) {
         console.log(err);
       }
     },
+
+    async getfristTime() {
+      try {
+        const response = await this.$axios.post(
+          "http://localhost:80/CARS_PWA/api/takephoto.php/getimagefrist",
+          {
+            user: {
+              car_id: this.path_image,
+            },
+          }
+        );
+        this.images = [];
+        console.log("fristtime");
+        console.log(response);
+        this.images = response.data.messages;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  created() {
+    this.getfristTime();
   },
 };
 </script>
@@ -79,6 +118,12 @@ export default {
 
 div.gallery {
   border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+div.gallery-add {
+  /* border: 1px solid #ccc; */
   border-radius: 8px;
   margin-top: 15px;
 }
@@ -119,7 +164,7 @@ div.desc {
 .responsive {
   padding: 0 6px;
   float: left;
-  width: 20%;
+  width: 25%;
 }
 
 @media only screen and (max-width: 700px) {
@@ -151,14 +196,36 @@ div.desc {
   transform: translateY(-100%);
   border: none;
   outline: none !important;
-  background-color: #FF9900;
+  background-color: #ff9900;
   color: whitesmoke;
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
 }
 
-.btn-take-photo:hover{
-    background-color:  #ff9900c2;
+.btn-take-photo:hover {
+  background-color: #ff9900c2;
+}
+
+label.cameraButton {
+  display: inline-block;
+  margin: 0;
+
+  /* Styles to make it look like a button */
+  padding: 0;
+  border: 0;
+  /* border-color: #eee #ccc #ccc #eee; */
+  /* background-color: #ddd; */
+  cursor: pointer;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #ccc #eee #eee #ccc;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="camera"] {
+  display: none;
 }
 </style>
