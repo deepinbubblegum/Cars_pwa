@@ -32,9 +32,10 @@ function generateRandomString($length = 5)
 // if it work don't touch it
 function sendUdp()
 {
+    $rootPath = $_SERVER['DOCUMENT_ROOT'];
     $data = json_decode(file_get_contents('php://input'), true);
     $structure = '../dist/images/' . $data['user']['car_id'];
-
+    $structure2 = $rootPath.'/dist/images/' . $data['user']['car_id'];
     if ($_SERVER['REQUEST_METHOD'] == 'OPTION') {
         http_response_code(200);
     }
@@ -60,7 +61,7 @@ function sendUdp()
             for ($i = 0; $i < sizeof($tem_file); $i++) {
                 // $tmp_id = $file_max_list + 1 + $i;
                 $file_de = explode(".", $tem_file[$i]);
-                sleep(0.5);
+                sleep(1);
                 rename($tmp_image . '/' . $tem_file[$i], $structure . '/' . $data['user']['car_id'] . '_'.$file_de[0] .'.' . $file_de[1]);
                 // rename($tmp_image . '/' . $tem_file[$i], $structure . '/' . $data['user']['car_id'] . '_' . generateRandomString() . $i . '.' . $file_de[1]);
             }
@@ -68,7 +69,7 @@ function sendUdp()
             mkdir($structure, 0777, true);
             for ($i = 0; $i < sizeof($tem_file); $i++) {
                 $file_de = explode(".", $tem_file[$i]);
-                sleep(0.5);
+                sleep(1);
                 rename($tmp_image . '/' . $tem_file[$i], $structure . '/' . $data['user']['car_id'] . '_' .$file_de[0]. '.' . $file_de[1]);
                 // rename($tmp_image . '/' . $tem_file[$i], $structure . '/' . $data['user']['car_id'] . '_' . generateRandomString() . $i . '.' . $file_de[1]);
             }
@@ -76,6 +77,12 @@ function sendUdp()
 
         $file = array_diff(scandir($structure, 1), array('..', '.'));
         echo json_encode(['messages' => $file]);
+        // for ($i=0; $i < sizeof($file); $i++) { 
+        //     $output = str_replace('.jpg', '_640x480.jpg', $file[$i]);
+        //     $file_str = $rootPath.'/ffmpeg.exe -i '.$structure2.'/'.$file.' -vf scale=640:480 '. $structure2 . '/' .$output;
+        //     shell_exec($file_str);
+        // }
+        
     }
 }
 

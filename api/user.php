@@ -8,9 +8,9 @@
     $urlParams = explode('/', $_SERVER['REQUEST_URI']);
     // call funtion in url
     
-    if (isset($urlParams[4])) {
+    if (isset($urlParams[3])) {
         try {
-            $urlParams[4]();
+            $urlParams[3]();
         } catch (\Throwable $th) {
             echo $th;
         }

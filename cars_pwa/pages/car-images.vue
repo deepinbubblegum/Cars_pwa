@@ -90,6 +90,7 @@ export default {
         (this.images.length !== 0) ? this.takestate = true:this.takestate = false;
       } catch (err) {
         console.log(err);
+        this.getfristTime();
       }
     },
 
